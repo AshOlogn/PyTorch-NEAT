@@ -14,7 +14,7 @@
 
 import torch
 import numpy as np
-from .activations import sigmoid_activation
+from .activations import sigmoid_activation, str_to_activation
 
 
 # def sparse_mat(shape, conns):
@@ -121,7 +121,7 @@ class RecurrentNet():
         return self.outputs
 
     @staticmethod
-    def create(genome, config, batch_size=1, activation=sigmoid_activation,
+    def create(genome, config, batch_size=1,
                prune_empty=False, use_current_activs=False, n_internal_steps=1):
         from neat.graphs import required_for_output
 
@@ -131,6 +131,8 @@ class RecurrentNet():
         if prune_empty:
             nonempty = {conn.key[1] for conn in genome.connections.values() if conn.enabled}.union(
                 set(genome_config.input_keys))
+
+        activation = str_to_activation[genome_config.activation_default]
 
         input_keys = list(genome_config.input_keys)
         hidden_keys = [k for k in genome.nodes.keys()
