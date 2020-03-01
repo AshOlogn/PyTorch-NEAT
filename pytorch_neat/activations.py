@@ -43,6 +43,9 @@ def sin_activation(x):
 def relu_activation(x):
     return F.relu(x)
 
+def clamped_activation(x):
+    return torch.clamped(x, -1, 1)
+
 
 str_to_activation = {
     'sigmoid': sigmoid_activation,
@@ -52,4 +55,5 @@ str_to_activation = {
     'identity': identity_activation,
     'sin': sin_activation,
     'relu': relu_activation,
+    'clamped': clamped_activation
 }
